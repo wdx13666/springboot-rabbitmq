@@ -1,6 +1,17 @@
+server:
+  port: 8088
 spring:
+  application:
+    name: rabbitmq-provider
   rabbitmq:
     host: 127.0.0.1
+    port: 5672
     username: guest
     password: guest
-#    virtual-host: /leyou
+    #virtual-host: JCcccHost
+    publisher-confirms: true
+    # 开启return模式
+    publisher-returns: true
+    # 配合return机制使用，表示接收路由不可达的消息
+    template:
+      mandatory=true:

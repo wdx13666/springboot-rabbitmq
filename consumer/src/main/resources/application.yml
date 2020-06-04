@@ -5,10 +5,11 @@ spring:
     name: rabbitmq-consumer
   #rabbitMq
   rabbitmq:
-    host: 192.168.88.128
+    host: 127.0.0.1
     port: 5672
     username: guest
     password: guest
+    # 设置签收模式：AUTO(自动签收)、MANUAL(手工签收)、NONE(不签收，没有任何操作)
     listener:
       direct:
         acknowledge-mode: manual

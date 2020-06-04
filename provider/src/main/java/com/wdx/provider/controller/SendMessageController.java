@@ -1,9 +1,9 @@
 package com.wdx.provider.controller;
 
+import com.wdx.provider.config.DelayedRabbitConfig;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDateTime;
@@ -71,4 +71,17 @@ public class SendMessageController {
         return "ok";
     }
 
+
+    @GetMapping("/delayed")
+    public String delayed() {
+        Map<String, Object> map = new HashMap<>();
+        map.put("messageId", "2");
+        map.put("messageData", 2);
+        map.put("createTime", 2);
+        rabbitTemplate.convertAndSend(DelayedRabbitConfig.DELAYED_EXCHANGE_NAME,DelayedRabbitConfig.DELAYED_ROUTING_KEY, map, a ->{
+            a.getMessageProperties().setDelay(6000);
+            return a;
+        });
+        return "ok";
+    }
 }
